@@ -1,30 +1,51 @@
+//---------------------
+//ANCHOR Classe Cercle
+//---------------------
+
+function Cercle(X, Y, rayon, color) {
+	this.X=X
+    this.Y=Y
+    this.rayon=rayon;
+    this.color = color;
+}
+
+//-----------------------------------------
+//ANCHOR Fonction Principale
+//-----------------------------------------
+
 var canvas = document.getElementById('zone');
 var ctx = canvas.getContext('2d');
 
-//-----------------------------------------
-//ANCHOR Clic dans l'espace créé un cercle
-//-----------------------------------------
+//Effacer la sauvegarde
+// localStorage.removeItem('save');
+
+//On récupère les cercles sauvegardés
+var save = JSON.parse(localStorage.getItem('save'));
+if(save == null)
+    save=[];
+console.log('sauvegarde récupérée :', save);
 
 canvas.addEventListener("click", function(e)
 {
     //1 - Récupérer les coordonnées du pointeur
     var X = e.pageX;
     var Y = e.pageY;
-    console.log('X : ', X, 'Y : ', Y);
 
     //2 - Récupérer un rayon aléatoire
     var rayon = getRandomInt(150);
-    console.log('rayon : ', rayon);
 
     //3 - Récupérer une couleur aléatoire
     var color = getRandomColor();
-    console.log('color : ', color);
 
     //4 - Créer le cercle
     ctx.beginPath();
     ctx.arc(X, Y, rayon, 0, 2*Math.PI, true);
     ctx.strokeStyle = color;
     ctx.stroke();
+
+    //5 - Sauvegarder le cercle
+    save.push(new Cercle(X, Y, rayon, color));
+    localStorage.setItem('save', JSON.stringify(save));
 });
 
 //--------------------------
