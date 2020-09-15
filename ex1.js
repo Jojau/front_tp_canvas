@@ -10,7 +10,7 @@ function Cercle(X, Y, rayon, color) {
 }
 
 //-----------------------------------------
-//ANCHOR Fonction Principale
+//SECTION Fonction Principale
 //-----------------------------------------
 
 var canvas = document.getElementById('zone');
@@ -19,12 +19,20 @@ var ctx = canvas.getContext('2d');
 //Effacer la sauvegarde
 // localStorage.removeItem('save');
 
-//On récupère les cercles sauvegardés
+//ANCHOR Récupérer & tracer les cercles sauvegardés
 var save = JSON.parse(localStorage.getItem('save'));
 if(save == null)
     save=[];
-console.log('sauvegarde récupérée :', save);
 
+for(i=0;i<save.length;i++)
+{
+    ctx.beginPath();
+    ctx.arc(save[i].X, save[i].Y, save[i].rayon, 0, 2*Math.PI, true);
+    ctx.strokeStyle = save[i].color;
+    ctx.stroke();
+}
+
+//ANCHOR Dessiner les cercles au clic
 canvas.addEventListener("click", function(e)
 {
     //1 - Récupérer les coordonnées du pointeur
@@ -48,18 +56,22 @@ canvas.addEventListener("click", function(e)
     localStorage.setItem('save', JSON.stringify(save));
 });
 
+//!SECTION
+
 //--------------------------
-//ANCHOR Fonctions annexes
+//SECTION Fonctions annexes
 //--------------------------
 
-//Entier Aléatoire
+//ANCHOR Entier Aléatoire
 function getRandomInt(max)
 {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-//Couleur Héxa-décimale aléatoire
+//ANCHOR Couleur Héxa-décimale aléatoire
 function getRandomColor()
 {
     return '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
 }
+
+//!SECTION
