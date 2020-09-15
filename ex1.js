@@ -16,9 +16,6 @@ function Cercle(X, Y, rayon, color) {
 var canvas = document.getElementById('zone');
 var ctx = canvas.getContext('2d');
 
-//Effacer la sauvegarde
-// localStorage.removeItem('save');
-
 //ANCHOR Récupérer & tracer les cercles sauvegardés
 var save = JSON.parse(localStorage.getItem('save'));
 if(save == null)
@@ -54,6 +51,20 @@ canvas.addEventListener("click", function(e)
     //5 - Sauvegarder le cercle
     save.push(new Cercle(X, Y, rayon, color));
     localStorage.setItem('save', JSON.stringify(save));
+});
+
+//ANCHOR Effacer le dessin
+bouton_del_draw=document.getElementById('delete_draw');
+bouton_del_draw.addEventListener("click", function()
+{
+    ctx.clearRect(0, 0, 600, 600);
+});
+
+//ANCHOR Effacer la sauvegarde
+bouton_del_save=document.getElementById('delete_save');
+bouton_del_save.addEventListener("click", function()
+{
+    localStorage.removeItem('save');
 });
 
 //!SECTION
